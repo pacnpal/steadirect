@@ -246,7 +246,7 @@
         <section aria-labelledby="converter-description">
             <p id="converter-description">Convert protocol URLs (like Steam invites) to shareable HTTPS links that work on any platform.</p>
             
-            <div role="form" aria-labelledby="form-title">
+            <form aria-labelledby="form-title" onsubmit="event.preventDefault(); convertUrl();">
                 <h2 id="form-title" class="visually-hidden">URL Converter Form</h2>
 
                 
@@ -257,9 +257,9 @@
                            placeholder="steam://joinlobby/123456/987654321"
                            aria-label="Enter Steam lobby URL to convert"
                            autocomplete="off" />
-                    <button onclick="convertUrl()" aria-label="Convert URL">Convert</button>
+                    <button type="submit" aria-label="Convert URL">Convert</button>
                 </div>
-            </div>
+            </form>
         </section>
         
         <output id="result" aria-live="polite"></output>
