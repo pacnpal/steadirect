@@ -68,6 +68,10 @@ The app can also be self-hosted - it will automatically use whatever domain it's
 
 This is an independent tool and is not endorsed by or affiliated with Valve Corporation or any other platform. Steam® and the Steam logo are registered trademarks of Valve Corporation. This tool simply facilitates the conversion of URLs and performs all operations locally in your web browser without collecting or logging any data.
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## Links
 
 - [PacNP.al](https://pacnp.al)
