@@ -249,12 +249,12 @@
             <div role="form" aria-labelledby="form-title">
                 <h2 id="form-title" class="visually-hidden">URL Converter Form</h2>
                 
-                <label for="steamUrl">Enter protocol URL</label>
+                <label for="steamUrl">Enter Steam Lobby URL (format: steam://joinlobby/123456/987654321)</label>
                 <div class="input-group">
                     <input type="text"
                            id="steamUrl"
-                           placeholder="Enter any protocol URL (e.g., steam://, discord://, etc.)"
-                           aria-label="Enter protocol URL to convert"
+                           placeholder="steam://joinlobby/123456/987654321"
+                           aria-label="Enter Steam lobby URL to convert"
                            autocomplete="off" />
                     <button onclick="convertUrl()" aria-label="Convert URL">Convert</button>
                 </div>
@@ -266,17 +266,11 @@
         <section class="instructions" aria-labelledby="instructions-title">
             <h2 id="instructions-title">How to use:</h2>
             <ol>
-                <li>Paste any protocol URL (e.g., steam://, discord://, etc.)</li>
-                <li>Click "Convert" to generate a shareable HTTPS link</li>
-                <li>Use the copy button or click to copy the generated link</li>
-                <li>Share the link anywhere - when clicked, it will redirect to the original protocol URL</li>
+                <li>Enter your Steam lobby URL in the format: steam://joinlobby/123456/987654321</li>
+                <li>Click "Convert" to generate the shareable link</li>
+                <li>The generated link will always be in this format: https://steadirect.com/?url=steam://joinlobby/123456/987654321</li>
+                <li>Use the copy button to copy the link</li>
             </ol>
-            <p>Example: Convert <code lang="text">steam://joinlobby/123456/987654321</code> to a link that works on Discord, social media, or any other platform!</p>
-            
-            <h3>Advanced Usage: Direct URL Parameters</h3>
-            <p>You can also create links directly by adding the URL parameter:</p>
-            <p>Format: <code lang="text">https://steadirect.com/?url=steam://joinlobby/11590/1097752417465514</code></p>
-            <p>Just add <code lang="text">?url=</code> followed by your protocol URL to create a shareable link instantly!</p>
         </section>
     </main>
 
@@ -343,13 +337,13 @@
             const input = document.getElementById('steamUrl');
             const url = input.value.trim();
             
-            if (!url.includes('://')) {
-                alert('Please enter a valid protocol URL (must include "://")');
+            if (!url.match(/^steam:\/\/joinlobby\/\d+\/\d+$/)) {
+                alert('Please enter a valid Steam lobby URL in the format: steam://joinlobby/123456/987654321');
                 return;
             }
 
-            // Keep original URL format, just append it to our domain
-            let shareableUrl = window.location.origin + window.location.pathname + '?url=' + encodeURIComponent(url);
+            // Create the exact format URL
+            let shareableUrl = 'https://steadirect.com/?url=' + url;
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `
                 <h3>Your Shareable Link:</h3>
