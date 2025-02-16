@@ -1,8 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Steadirect.com - URL Protocol Converter</title>
-    <meta name="description" content="Convert protocol URLs (like steam://) to shareable HTTPS links that work anywhere">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steadirect.com - Convert Protocol URLs to HTTPS Links | Steam Discord URL Converter</title>
+    <meta name="description" content="Convert protocol URLs (steam://, discord://) to shareable HTTPS links that work anywhere. Free tool to share Steam invites and protocol links on Discord, social media, and more.">
+    <meta name="keywords" content="steam url converter, protocol url converter, steam invite link converter, discord url converter, steam to https, protocol to https">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://steadirect.com">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Convert Protocol URLs to HTTPS Links - Steadirect.com">
+    <meta property="og:description" content="Convert steam:// and other protocol URLs to shareable HTTPS links that work anywhere. Perfect for sharing Steam invites on Discord and social media.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://steadirect.com">
+    <meta property="og:site_name" content="Steadirect.com">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Protocol URL to HTTPS Converter - Steadirect.com">
+    <meta name="twitter:description" content="Convert protocol URLs (steam://, discord://) to shareable HTTPS links. Share Steam invites anywhere!">
+    
+    <!-- Language Support -->
+    <link rel="alternate" hreflang="x-default" href="https://steadirect.com">
+    <link rel="alternate" hreflang="en" href="https://steadirect.com">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Steadirect.com - Protocol URL Converter",
+      "description": "Convert protocol URLs to shareable HTTPS links",
+      "url": "https://steadirect.com",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
     <style>
         :root {
             --bg-color: #f5f5f5;
@@ -41,6 +80,19 @@
             color: var(--text-color);
             transition: background-color 0.3s, color 0.3s;
             line-height: 1.6;
+        }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--button-bg);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 0;
         }
         .site-title {
             text-align: center;
@@ -169,50 +221,66 @@
     </style>
 </head>
 <body>
-    <main class="container">
-       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light theme">🌓 Toggle Theme</button>
-       <div class="site-title">
-           <a href="https://steadirect.com">Steadirect.com</a>
-       </div>
-       <h1>URL Protocol Converter</h1>
-       <p>Convert protocol URLs (like Steam invites) to shareable HTTPS links that work on any platform.</p>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <main id="main-content" class="container" role="main">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light theme">
+            <span aria-hidden="true">🌓</span> Toggle Theme
+        </button>
         
-        <label for="steamUrl">Enter protocol URL</label>
-        <div class="input-group">
-            <input type="text"
-                   id="steamUrl"
-                   placeholder="Enter any protocol URL (e.g., steam://, discord://, etc.)"
-                   aria-label="Enter protocol URL to convert"
-                   autocomplete="off" />
-            <button onclick="convertUrl()" aria-label="Convert URL">Convert</button>
+        <div class="site-title">
+            <a href="https://steadirect.com" aria-label="Steadirect.com Homepage">Steadirect.com</a>
         </div>
+        
+        <h1>URL Protocol Converter</h1>
+        
+        <section aria-labelledby="converter-description">
+            <p id="converter-description">Convert protocol URLs (like Steam invites) to shareable HTTPS links that work on any platform.</p>
+            
+            <div role="form" aria-labelledby="form-title">
+                <h2 id="form-title" class="visually-hidden">URL Converter Form</h2>
+                
+                <label for="steamUrl">Enter protocol URL</label>
+                <div class="input-group">
+                    <input type="text"
+                           id="steamUrl"
+                           placeholder="Enter any protocol URL (e.g., steam://, discord://, etc.)"
+                           aria-label="Enter protocol URL to convert"
+                           autocomplete="off" />
+                    <button onclick="convertUrl()" aria-label="Convert URL">Convert</button>
+                </div>
+            </div>
+        </section>
         
         <output id="result" aria-live="polite"></output>
 
-        <section class="instructions" aria-label="Usage instructions">
-            <h2>How to use:</h2>
+        <section class="instructions" aria-labelledby="instructions-title">
+            <h2 id="instructions-title">How to use:</h2>
             <ol>
                 <li>Paste any protocol URL (e.g., steam://, discord://, etc.)</li>
                 <li>Click "Convert" to generate a shareable HTTPS link</li>
                 <li>Use the copy button or click to copy the generated link</li>
                 <li>Share the link anywhere - when clicked, it will redirect to the original protocol URL</li>
             </ol>
-            <p>Example: Convert <code>steam://joinlobby/123456/987654321</code> to a link that works on Discord, social media, or any other platform!</p>
+            <p>Example: Convert <code lang="text">steam://joinlobby/123456/987654321</code> to a link that works on Discord, social media, or any other platform!</p>
             
             <h3>Advanced Usage: Direct URL Parameters</h3>
             <p>You can also create links directly by adding the URL parameter:</p>
-            <p>Format: <code>https://steadirect.com/?url=steam://joinlobby/11590/1097752417465514</code></p>
-            <p>Just add <code>?url=</code> followed by your protocol URL to create a shareable link instantly!</p>
+            <p>Format: <code lang="text">https://steadirect.com/?url=steam://joinlobby/11590/1097752417465514</code></p>
+            <p>Just add <code lang="text">?url=</code> followed by your protocol URL to create a shareable link instantly!</p>
         </section>
     </main>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <p>This is an independent tool and is not endorsed by or affiliated with Valve Corporation or other platforms.<br>
         All URL conversion and redirection is performed locally in your browser - no data is collected or logged.</p>
-        <p><a href="https://pacnp.al" target="_blank" rel="noopener">A PacNP.al site</a> | <a href="https://bsky.app/profile/pacnp.al" target="_blank" rel="noopener">@pacnp.al on Bluesky</a></p>
+        <p>
+            <a href="https://pacnp.al" target="_blank" rel="noopener noreferrer" aria-label="Visit PacNP.al website">A PacNP.al site</a> |
+            <a href="https://bsky.app/profile/pacnp.al" target="_blank" rel="noopener noreferrer" aria-label="Follow @pacnp.al on Bluesky">@pacnp.al on Bluesky</a>
+        </p>
     </footer>
 
-    <script>
+    <script defer>
         // Theme handling
         function setTheme(theme) {
             document.documentElement.setAttribute('data-theme', theme);
@@ -249,9 +317,12 @@
             try {
                 await navigator.clipboard.writeText(text);
                 const copyButton = document.querySelector('.copy-button');
+                const originalLabel = copyButton.getAttribute('aria-label');
                 copyButton.textContent = 'Copied!';
+                copyButton.setAttribute('aria-label', 'Link copied to clipboard');
                 setTimeout(() => {
                     copyButton.textContent = 'Copy';
+                    copyButton.setAttribute('aria-label', originalLabel);
                 }, 2000);
             } catch (err) {
                 alert('Failed to copy text: ' + err);
@@ -269,14 +340,12 @@
             }
 
             // Keep original URL format, just append it to our domain
-            let shareableUrl = window.location.origin + window.location.pathname + '?url=' + url;
-            // Remove any accidental double encoding if it exists
-            shareableUrl = decodeURIComponent(shareableUrl);
+            let shareableUrl = window.location.origin + window.location.pathname + '?url=' + encodeURIComponent(url);
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `
                 <h3>Your Shareable Link:</h3>
-                <div class="result-box">
-                    <a href="${shareableUrl}" aria-label="Generated shareable link">${shareableUrl}</a>
+                <div class="result-box" role="region" aria-label="Generated shareable link">
+                    <a href="${shareableUrl}" aria-label="Click to use generated link">${shareableUrl}</a>
                     <button onclick="copyToClipboard('${shareableUrl}')" class="copy-button" aria-label="Copy link to clipboard">Copy</button>
                 </div>
                 <p>Share this link anywhere!</p>
@@ -292,12 +361,14 @@
         }
 
         // Initialize theme and handle URL parameters
-        initializeTheme();
-        const initialUrl = urlParams.get('input');
-        if (initialUrl) {
-            document.getElementById('steamUrl').value = decodeURIComponent(initialUrl);
-            convertUrl();
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            const initialUrl = urlParams.get('input');
+            if (initialUrl) {
+                document.getElementById('steamUrl').value = decodeURIComponent(initialUrl);
+                convertUrl();
+            }
+        });
     </script>
 </body>
 </html>
