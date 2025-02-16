@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>URL Protocol Converter</title>
+    <title>Steadirect.com - URL Protocol Converter</title>
     <meta name="description" content="Convert protocol URLs (like steam://) to shareable HTTPS links that work anywhere">
     <style>
         :root {
@@ -42,6 +42,28 @@
             transition: background-color 0.3s, color 0.3s;
             line-height: 1.6;
         }
+        .site-title {
+            text-align: center;
+            margin: 15px 0 20px 0;
+        }
+        .site-title a {
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 2em;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .site-title a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.2em;
+            margin: 0 0 20px 0;
+            color: var(--text-color);
+            font-weight: normal;
+            opacity: 0.9;
+        }
         .container {
             background: var(--container-bg);
             padding: 20px;
@@ -49,10 +71,19 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
         input[type="text"] {
-            width: 100%;
+            flex: 1;
             padding: 8px;
-            margin: 10px 0;
             border: 1px solid var(--border-color);
             border-radius: 4px;
             background: var(--result-bg);
@@ -139,17 +170,22 @@
 </head>
 <body>
     <main class="container">
-        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light theme">🌓 Toggle Theme</button>
-        <h1>URL Protocol Converter</h1>
-        <p>Convert protocol URLs to shareable HTTPS links that work on any platform.</p>
+       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light theme">🌓 Toggle Theme</button>
+       <div class="site-title">
+           <a href="https://steadirect.com">Steadirect.com</a>
+       </div>
+       <h1>URL Protocol Converter</h1>
+       <p>Convert protocol URLs (like Steam invites) to shareable HTTPS links that work on any platform.</p>
         
-        <label for="steamUrl" class="sr-only">Enter protocol URL</label>
-        <input type="text" 
-               id="steamUrl" 
-               placeholder="Enter any protocol URL (e.g., steam://, discord://, etc.)" 
-               aria-label="Enter protocol URL to convert"
-               autocomplete="off" />
-        <button onclick="convertUrl()" aria-label="Convert URL">Convert</button>
+        <label for="steamUrl">Enter protocol URL</label>
+        <div class="input-group">
+            <input type="text"
+                   id="steamUrl"
+                   placeholder="Enter any protocol URL (e.g., steam://, discord://, etc.)"
+                   aria-label="Enter protocol URL to convert"
+                   autocomplete="off" />
+            <button onclick="convertUrl()" aria-label="Convert URL">Convert</button>
+        </div>
         
         <output id="result" aria-live="polite"></output>
 
