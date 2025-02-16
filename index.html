@@ -1,91 +1,257 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Steam URL Converter</title>
+    <title>URL Protocol Converter</title>
+    <meta name="description" content="Convert protocol URLs (like steam://) to shareable HTTPS links that work anywhere">
     <style>
+        :root {
+            --bg-color: #f5f5f5;
+            --container-bg: white;
+            --text-color: #333;
+            --border-color: #ddd;
+            --result-bg: #f8f9fa;
+            --button-bg: #1a9fff;
+            --button-hover: #0089ff;
+            --footer-text: #666;
+            --link-color: #1a9fff;
+            --copy-button-bg: #28a745;
+            --copy-button-hover: #218838;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --container-bg: #2d2d2d;
+            --text-color: #e0e0e0;
+            --border-color: #404040;
+            --result-bg: #363636;
+            --button-bg: #2979ff;
+            --button-hover: #2962ff;
+            --footer-text: #999;
+            --link-color: #5c9eff;
+            --copy-button-bg: #2ea043;
+            --copy-button-hover: #238636;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             max-width: 800px;
             margin: 20px auto;
             padding: 0 20px;
-            background: #f5f5f5;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
         }
         .container {
-            background: white;
+            background: var(--container-bg);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
         input[type="text"] {
             width: 100%;
             padding: 8px;
             margin: 10px 0;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
+            background: var(--result-bg);
+            color: var(--text-color);
         }
         button {
-            background: #1a9fff;
+            background: var(--button-bg);
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.2s;
         }
         button:hover {
-            background: #0089ff;
+            background: var(--button-hover);
+        }
+        button:focus {
+            outline: 2px solid var(--button-hover);
+            outline-offset: 2px;
+        }
+        button.copy-button {
+            background: var(--copy-button-bg);
+            padding: 6px 12px;
+            margin-left: 10px;
+            font-size: 0.9em;
+        }
+        button.copy-button:hover {
+            background: var(--copy-button-hover);
         }
         #result {
             margin-top: 20px;
             word-break: break-all;
         }
         .result-box {
-            background: #f8f9fa;
+            background: var(--result-bg);
             padding: 10px;
             border-radius: 4px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .result-box a {
+            color: var(--link-color);
+            margin-right: 10px;
+            flex-grow: 1;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--footer-text);
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        .footer a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .instructions {
+            background: var(--result-bg);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        @media (max-width: 600px) {
+            .theme-toggle {
+                position: static;
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Steam URL Converter</h1>
-        <p>Convert Steam URLs to shareable links that work on Discord and other platforms.</p>
+    <main class="container">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light theme">🌓 Toggle Theme</button>
+        <h1>URL Protocol Converter</h1>
+        <p>Convert protocol URLs to shareable HTTPS links that work on any platform.</p>
         
-        <input type="text" id="steamUrl" placeholder="Enter steam:// URL (e.g., steam://joinlobby/1131190/109775241747665514)" />
-        <button onclick="convertUrl()">Convert</button>
+        <label for="steamUrl" class="sr-only">Enter protocol URL</label>
+        <input type="text" 
+               id="steamUrl" 
+               placeholder="Enter any protocol URL (e.g., steam://, discord://, etc.)" 
+               aria-label="Enter protocol URL to convert"
+               autocomplete="off" />
+        <button onclick="convertUrl()" aria-label="Convert URL">Convert</button>
         
-        <div id="result"></div>
-    </div>
+        <output id="result" aria-live="polite"></output>
+
+        <section class="instructions" aria-label="Usage instructions">
+            <h2>How to use:</h2>
+            <ol>
+                <li>Paste any protocol URL (e.g., steam://, discord://, etc.)</li>
+                <li>Click "Convert" to generate a shareable HTTPS link</li>
+                <li>Use the copy button or click to copy the generated link</li>
+                <li>Share the link anywhere - when clicked, it will redirect to the original protocol URL</li>
+            </ol>
+            <p>Example: Convert <code>steam://joinlobby/123456/987654321</code> to a link that works on Discord, social media, or any other platform!</p>
+            
+            <h3>Advanced Usage: Direct URL Parameters</h3>
+            <p>You can also create links directly by adding the URL parameter:</p>
+            <p>Format: <code>https://steadirect.com/?url=YOUR_PROTOCOL_URL</code></p>
+            <p>Example:<br>
+            <code>https://steadirect.com/?url=steam%3A%2F%2Fjoinlobby%2F123456%2F987654321</code></p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>This is an independent tool and is not endorsed by or affiliated with Valve Corporation or other platforms.<br>
+        All URL conversion and redirection is performed locally in your browser - no data is collected or logged.</p>
+        <p><a href="https://pacnp.al" target="_blank" rel="noopener">A PacNP.al site</a> | <a href="https://bsky.app/profile/pacnp.al" target="_blank" rel="noopener">@pacnp.al on Bluesky</a></p>
+    </footer>
 
     <script>
-        // Check if we have a steam URL in the parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const steamUrl = urlParams.get('url');
-        if (steamUrl) {
-            // Redirect to the Steam URL
-            window.location.href = decodeURIComponent(steamUrl);
+        // Theme handling
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
         }
 
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+
+        // Initialize theme
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+            
+            // Listen for system theme changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (!localStorage.getItem('theme')) {
+                    setTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        }
+
+        // Copy to clipboard function
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                const copyButton = document.querySelector('.copy-button');
+                copyButton.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyButton.textContent = 'Copy';
+                }, 2000);
+            } catch (err) {
+                alert('Failed to copy text: ' + err);
+            }
+        }
+
+        // URL handling
         function convertUrl() {
-            const steamUrl = document.getElementById('steamUrl').value;
-            if (!steamUrl.startsWith('steam://')) {
-                alert('Please enter a valid steam:// URL');
+            const input = document.getElementById('steamUrl');
+            const url = input.value.trim();
+            
+            if (!url.includes('://')) {
+                alert('Please enter a valid protocol URL (must include "://")');
                 return;
             }
 
-            const shareableUrl = window.location.origin + window.location.pathname + '?url=' + encodeURIComponent(steamUrl);
+            const shareableUrl = window.location.origin + window.location.pathname + '?url=' + encodeURIComponent(url);
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `
                 <h3>Your Shareable Link:</h3>
                 <div class="result-box">
-                    <a href="${shareableUrl}">${shareableUrl}</a>
+                    <a href="${shareableUrl}" aria-label="Generated shareable link">${shareableUrl}</a>
+                    <button onclick="copyToClipboard('${shareableUrl}')" class="copy-button" aria-label="Copy link to clipboard">Copy</button>
                 </div>
-                <p>Copy this link and share it on Discord or other platforms.</p>
+                <p>Share this link anywhere!</p>
             `;
         }
 
-        // If URL was in the input field on page load, convert it automatically
+        // Check for URL in parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectUrl = urlParams.get('url');
+        if (redirectUrl) {
+            window.location.href = decodeURIComponent(redirectUrl);
+        }
+
+        // Initialize theme and handle URL parameters
+        initializeTheme();
         const initialUrl = urlParams.get('input');
         if (initialUrl) {
             document.getElementById('steamUrl').value = decodeURIComponent(initialUrl);

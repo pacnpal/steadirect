@@ -1,41 +1,17 @@
-# Steam URL Converter
+# URL Protocol Converter
 
-A simple, standalone web app that converts Steam URLs to shareable HTTPS links. Perfect for sharing Steam lobby links on platforms like Discord where steam:// URLs are not clickable.
+A simple, standalone web app that converts protocol URLs (like steam://) to shareable HTTPS links that work on any platform. Perfect for sharing URLs that normally aren't clickable on social media, chat platforms, or other websites.
+
+**🌐 Live at: [https://steadirect.com](https://steadirect.com)**
 
 ## Deployment
 
 The app is completely self-contained in a single `index.html` file. You can host it anywhere:
 
 - GitHub Pages
-- Netlify
-- Vercel
+- Cloudflare Compute
+- Neocities
 - Any web hosting service that can serve static files
-
-## How it Works
-
-1. When hosted (e.g., at `https://yourdomain.com/`), the app will generate links like:
-   ```
-   https://yourdomain.com/?url=steam%3A%2F%2Fjoinlobby%2F1131190%2F109775241747665514
-   ```
-
-2. When someone clicks the generated link, the app automatically redirects them to the original Steam URL:
-   ```
-   steam://joinlobby/1131190/109775241747665514
-   ```
-
-## Examples
-
-Original Steam URL:
-```
-steam://joinlobby/1131190/109775241747665514
-```
-
-Generated shareable link (if hosted on example.com):
-```
-https://example.com/?url=steam%3A%2F%2Fjoinlobby%2F1131190%2F109775241747665514
-```
-
-The app will work the same way regardless of where it's hosted - it automatically uses whatever domain it's running on to generate the correct links.
 
 ## Features
 
@@ -44,3 +20,55 @@ The app will work the same way regardless of where it's hosted - it automaticall
 - Works on any hosting platform
 - Automatic URL parameter handling
 - Client-side only (no server required)
+- Easy copying with dedicated copy button
+- Dark mode support:
+  - Automatically detects system theme preference
+  - Manual theme toggle button
+  - Remembers user's preferred theme
+  - Smooth theme transitions
+- Accessibility:
+  - Screen reader compatible
+  - ARIA labels and roles
+  - Semantic HTML structure
+  - Keyboard navigation support
+- Privacy focused:
+  - All URL conversion is done locally in the browser
+  - No data collection or logging
+  - No external requests or tracking
+
+## How it Works
+
+1. Using the web interface at [steadirect.com](https://steadirect.com), or by creating URLs directly:
+   ```
+   https://steadirect.com/?url=steam%3A%2F%2Fjoinlobby%2F123456%2F987654321
+   ```
+
+2. When someone clicks the generated link, the app automatically redirects them to the original protocol URL:
+   ```
+   steam://joinlobby/123456/987654321
+   ```
+
+## Examples
+
+The converter works with any protocol URL, for example:
+
+```
+steam://joinlobby/123456/987654321
+discord://discord.com/channels/123456789
+```
+
+Generated shareable link:
+```
+https://steadirect.com/?url=steam%3A%2F%2Fjoinlobby%2F123456%2F987654321
+```
+
+The app can also be self-hosted - it will automatically use whatever domain it's running on to generate the correct links.
+
+## Disclaimer
+
+This is an independent tool and is not endorsed by or affiliated with Valve Corporation or any other platform. Steam® and the Steam logo are registered trademarks of Valve Corporation. This tool simply facilitates the conversion of URLs and performs all operations locally in your web browser without collecting or logging any data.
+
+## Links
+
+- [PacNP.al](https://pacnp.al)
+- [@pacnp.al on Bluesky](https://bsky.app/profile/pacnp.al)
