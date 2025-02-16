@@ -9,8 +9,8 @@ A simple, standalone web app that converts protocol URLs (like steam://) to shar
 The app is completely self-contained in a single `index.html` file. You can host it anywhere:
 
 - GitHub Pages
-- Cloudflare Compute
-- Neocities
+- Netlify
+- Vercel
 - Any web hosting service that can serve static files
 
 ## Features
@@ -40,12 +40,12 @@ The app is completely self-contained in a single `index.html` file. You can host
 
 1. Using the web interface at [steadirect.com](https://steadirect.com), or by creating URLs directly:
    ```
-   https://steadirect.com/?url=steam%3A%2F%2Fjoinlobby%2F123456%2F987654321
+   https://steadirect.com/?url=steam://joinlobby/1131190/109775241747665514
    ```
 
 2. When someone clicks the generated link, the app automatically redirects them to the original protocol URL:
    ```
-   steam://joinlobby/123456/987654321
+   steam://joinlobby/1131190/109775241747665514
    ```
 
 ## Examples
@@ -53,13 +53,13 @@ The app is completely self-contained in a single `index.html` file. You can host
 The converter works with any protocol URL, for example:
 
 ```
-steam://joinlobby/123456/987654321
+steam://joinlobby/1131190/109775241747665514
 discord://discord.com/channels/123456789
 ```
 
 Generated shareable link:
 ```
-https://steadirect.com/?url=steam%3A%2F%2Fjoinlobby%2F123456%2F987654321
+https://steadirect.com/?url=steam://joinlobby/1131190/109775241747665514
 ```
 
 The app can also be self-hosted - it will automatically use whatever domain it's running on to generate the correct links.

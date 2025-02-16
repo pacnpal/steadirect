@@ -76,9 +76,11 @@
         }
         button.copy-button {
             background: var(--copy-button-bg);
-            padding: 6px 12px;
-            margin-left: 10px;
-            font-size: 0.9em;
+            padding: 8px 16px;
+            margin-left: 15px;
+            font-size: 1em;
+            min-width: 80px;
+            white-space: nowrap;
         }
         button.copy-button:hover {
             background: var(--copy-button-hover);
@@ -163,9 +165,8 @@
             
             <h3>Advanced Usage: Direct URL Parameters</h3>
             <p>You can also create links directly by adding the URL parameter:</p>
-            <p>Format: <code>https://steadirect.com/?url=YOUR_PROTOCOL_URL</code></p>
-            <p>Example:<br>
-            <code>https://steadirect.com/?url=steam%3A%2F%2Fjoinlobby%2F123456%2F987654321</code></p>
+            <p>Format: <code>https://steadirect.com/?url=steam://joinlobby/11590/1097752417465514</code></p>
+            <p>Just add <code>?url=</code> followed by your protocol URL to create a shareable link instantly!</p>
         </section>
     </main>
 
@@ -231,7 +232,10 @@
                 return;
             }
 
-            const shareableUrl = window.location.origin + window.location.pathname + '?url=' + encodeURIComponent(url);
+            // Keep original URL format, just append it to our domain
+            let shareableUrl = window.location.origin + window.location.pathname + '?url=' + url;
+            // Remove any accidental double encoding if it exists
+            shareableUrl = decodeURIComponent(shareableUrl);
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `
                 <h3>Your Shareable Link:</h3>
@@ -247,6 +251,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const redirectUrl = urlParams.get('url');
         if (redirectUrl) {
+            // Ensure URL is in original format without encoding
             window.location.href = decodeURIComponent(redirectUrl);
         }
 
