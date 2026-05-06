@@ -255,7 +255,7 @@
         <h1>URL Protocol Converter</h1>
         
         <section aria-labelledby="converter-description">
-            <p id="converter-description">Convert protocol URLs (like Steam invites) to shareable HTTPS links that work on any platform.</p>
+            <p id="converter-description">Convert <strong>any</strong> protocol URL to a shareable HTTPS link that works on any platform. Steam, Discord, Spotify, and any other custom protocol are all supported — not just Steam!</p>
             
             <form aria-labelledby="form-title" onsubmit="event.preventDefault(); convertUrl();">
                 <h2 id="form-title" class="visually-hidden">URL Converter Form</h2>
@@ -265,8 +265,8 @@
                 <div class="input-group">
                     <input type="text"
                            id="steamUrl"
-                           placeholder="steam://joinlobby/123456/987654321"
-                           aria-label="Enter Steam lobby URL to convert"
+                           placeholder="any://protocol/url — e.g. steam://joinlobby/123/456 or discord://..."
+                           aria-label="Enter protocol URL to convert"
                            autocomplete="off" />
                     <button type="submit" aria-label="Convert URL">Convert</button>
                 </div>
@@ -278,9 +278,9 @@
         <section class="instructions" aria-labelledby="instructions-title">
             <h2 id="instructions-title">How to use:</h2>
             <ol>
-                <li>Enter your Protocol URL in the format: steam://joinlobby/123456/987654321</li>
+                <li>Enter <strong>any</strong> protocol URL — steam://, discord://, spotify://, or any other custom protocol (steam:// and discord:// are just examples)</li>
                 <li>Click "Convert" to generate the shareable link</li>
-                <li>The generated link will always be in this format: https://steadirect.com/?url=steam://joinlobby/123456/987654321</li>
+                <li>The generated link will always be in this format: https://steadirect.com/?url=&lt;your-protocol-url&gt;</li>
                 <li>Use the copy button to copy the link</li>
             </ol>
         </section>
@@ -351,8 +351,8 @@
             const input = document.getElementById('steamUrl');
             const url = input.value.trim();
             
-            if (!url.match(/^steam:\/\/joinlobby\/\d+\/\d+$/)) {
-                alert('Please enter a valid Steam lobby URL in the format: steam://joinlobby/123456/987654321');
+            if (!url.match(/^[a-zA-Z][a-zA-Z0-9+\-.]*:\/\/.+$/)) {
+                alert('Please enter a valid protocol URL (e.g. steam://joinlobby/123456/987654321 or discord://...)');
                 return;
             }
 
