@@ -265,8 +265,8 @@
                 <div class="input-group">
                     <input type="text"
                            id="steamUrl"
-                           placeholder="steam://joinlobby/123456/987654321"
-                           aria-label="Enter Steam lobby URL to convert"
+                           placeholder="steam://joinlobby/123456/987654321 or discord://..."
+                           aria-label="Enter protocol URL to convert"
                            autocomplete="off" />
                     <button type="submit" aria-label="Convert URL">Convert</button>
                 </div>
@@ -278,9 +278,9 @@
         <section class="instructions" aria-labelledby="instructions-title">
             <h2 id="instructions-title">How to use:</h2>
             <ol>
-                <li>Enter your Protocol URL in the format: steam://joinlobby/123456/987654321</li>
+                <li>Enter your Protocol URL (e.g. steam://joinlobby/123456/987654321 or discord://...)</li>
                 <li>Click "Convert" to generate the shareable link</li>
-                <li>The generated link will always be in this format: https://steadirect.com/?url=steam://joinlobby/123456/987654321</li>
+                <li>The generated link will always be in this format: https://steadirect.com/?url=&lt;your-protocol-url&gt;</li>
                 <li>Use the copy button to copy the link</li>
             </ol>
         </section>
@@ -351,8 +351,8 @@
             const input = document.getElementById('steamUrl');
             const url = input.value.trim();
             
-            if (!url.match(/^steam:\/\/joinlobby\/\d+\/\d+$/)) {
-                alert('Please enter a valid Steam lobby URL in the format: steam://joinlobby/123456/987654321');
+            if (!url.match(/^[a-zA-Z][a-zA-Z0-9+\-.]*:\/\/.+$/)) {
+                alert('Please enter a valid protocol URL (e.g. steam://joinlobby/123456/987654321 or discord://...)');
                 return;
             }
 
